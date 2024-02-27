@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/Widgets/text_field_input.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/utils.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -29,6 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+// To select the image from gallery
   void selectImage() async {
     try {
       Uint8List im = await pickImage(ImageSource.gallery);
@@ -40,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+//Method to SignUp the user
   void signUpUser() async {
     setState(() {
       _isLoading = true;
@@ -59,6 +62,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else {
       print(res);
     }
+  }
+
+//Method to navigate to The LoginScreen
+  void navigateToLoginScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+    );
   }
 
   @override
@@ -91,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           radius: 64,
                           backgroundImage: MemoryImage(_image!),
                         )
-                      : CircleAvatar(
+                      : const CircleAvatar(
                           radius: 64,
                           backgroundImage: AssetImage('assets/avatar.png'),
                         ),
@@ -102,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: () {
                         selectImage();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add_a_photo,
                         color: Colors.white,
                       ),
@@ -162,7 +174,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(4)),
-                  child:_isLoading ?const Center(child: CircularProgressIndicator(color: Colors.white,),) :const Center(child: Text('Sign Up' , style: TextStyle(color: Colors.white),)),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Center(
+                          child: Text(
+                          'Sign Up',
+                          style: TextStyle(color: Colors.white),
+                        )),
                 ),
               ),
               const SizedBox(height: 12),
@@ -173,15 +195,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an Account ?"),
+                    Text(" Have an Account ?"),
                     GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                            child: Text(
-                          "  Sign up",
+                        onTap: navigateToLoginScreen,
+                        child: const Text(
+                          " Login",
                           style: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.bold),
-                        )))
+                        ))
                   ],
                 ),
               ),

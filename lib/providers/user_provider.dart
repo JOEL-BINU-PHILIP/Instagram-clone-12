@@ -10,12 +10,16 @@ class UserProvider with ChangeNotifier {
   final AuthMethods _authMethods = AuthMethods();
 
   //The below line of code is a function in which the get the data of the user using the user model folder
-  User get getUser => _user!;
+   User? get getUser => _user;
   //Why we are doing this method is because suppose we change the username directly from firebase(firestore database), and then for it to be displayed
-  //in the mobile-screen-Layout screen without restarting the app. 
+  //in the mobile-screen-Layout screen and web Screen Layout without restarting the app. 
   Future<void> refreshUser() async{
-    User user  = await _authMethods.getUserDetails();
-    _user = user;
+    User users  = await _authMethods.getUserDetails();
+    print('patti');
+    print(users.email);
+    _user = users;
+    print(_user!.bio);
+    print(_user!.photoURL);
     notifyListeners();
   }
 }

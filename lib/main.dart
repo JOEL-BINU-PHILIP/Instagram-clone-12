@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:instagram_clone/firebase_options.dart';
+import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/responsive/mobileScreenLayout.dart';
 import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
 import 'package:instagram_clone/responsive/webScreenLayout.dart';
@@ -10,7 +11,6 @@ import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        
+        ChangeNotifierProvider(create: (context) => UserProvider())
       ],
       child: MaterialApp(
         title: 'Instagram Clone',
@@ -59,10 +59,12 @@ class MyApp extends StatelessWidget {
                 color: Colors.white,
               ),);
             }
-           return LoginScreen();
+           return const LoginScreen();
           },
         ),
       ),
     );
   }
 }
+
+

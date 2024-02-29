@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res == 'success') {
       print(res);
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => ResponsiveLayout(
+          builder: (context) => const ResponsiveLayout(
               webScreenLayout: WebScreenLayout(),
               mobileScreenLayout: MobileScreenLayout())));
     } else {
@@ -63,14 +63,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Flexible(
-              child: Container(),
               flex: 2,
+              child: Container(),
             ),
             //svg image
             Image.asset(
@@ -129,11 +129,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Don't have an Account ?"),
+                  const Text("Don't have an Account ?"),
                   GestureDetector(
                     onTap: navigateToSignUp,
                     child: Container(
-                      child: Text(
+                      child: const Text(
                         " Sign Up",
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
@@ -144,8 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Flexible(
-              child: Container(),
               flex: 2,
+              child: Container(),
             )
           ],
         ),

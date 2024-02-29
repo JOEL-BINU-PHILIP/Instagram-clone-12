@@ -47,6 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _isLoading = true;
     });
+   
     String res = await AuthMethods().signUpUser(
       email: _emailController.text,
       password: _passwordController.text,
@@ -54,6 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       bio: _bioController.text,
       file: _image!,
     );
+    
     setState(() {
       _isLoading = false;
     });
@@ -61,6 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       showSnackBar(res, context);
     } else {
       print(res);
+      navigateToLoginScreen();
     }
   }
 
@@ -165,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 24,
               ),
-              //button Login
+              //button signup
               TextButton(
                 onPressed: signUpUser,
                 child: Container(
@@ -189,26 +192,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 12),
 
-              //Transitioning to signing up
+              //Transitioning to logging up
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(" Have an Account ?"),
+                    const Text(" Have an Account ?"),
                     GestureDetector(
                         onTap: navigateToLoginScreen,
                         child: const Text(
                           " Login",
                           style: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.bold),
-                        ))
+                        ),
+                   )
                   ],
                 ),
               ),
               Flexible(
-                child: Container(),
                 flex: 2,
+                child: Container(),
               )
             ],
           ),

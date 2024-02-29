@@ -17,12 +17,14 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   @override
   void initState() {
     super.initState();
-    addData();
+    Future.delayed(Duration.zero ,() {
+         addData();
+    });
   }
     void addData() async {
       UserProvider userProvider = Provider.of<UserProvider>(context , listen: false);
      userProvider.getUser==null ? print('hello') : print('therndi');
-      await userProvider.refreshUser();
+      await userProvider.getUserDetails();
       userProvider.getUser==null ? print('hello') : print('therndi');
     }
   @override 

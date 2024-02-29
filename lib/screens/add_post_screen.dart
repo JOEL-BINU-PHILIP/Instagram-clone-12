@@ -1,11 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:instagram_clone/models/user.dart';
-import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
+import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -19,7 +17,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
 //The _selectImage function is to return a DialogBox on which the user can chose to
 //take the photo from gallery or camera or something else.
   Uint8List? _file;
-
+  String? profilePicsReturn(){
+   UserProvider userProvider = Provider.of<UserProvider>(context , listen: false);
+   
+    return userProvider.getUser!.photoURL;
+  }
   _selectImage(BuildContext context) async {
     return showDialog(
         context: context,
@@ -55,13 +57,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
           );
         });
   }
-  @override
 
   @override
   Widget build(BuildContext context) {
-
-    final UserProvider user   =  Provider.of<UserProvider>(context);
-    print(user.getUser!.bio);
     return _file == null
         ? Center(
             child: IconButton(icon: const Icon(Icons.upload), onPressed:() => _selectImage(context)),
@@ -95,14 +93,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(user.getUser!.photoURL as String),
+                   CircleAvatar(
+                      backgroundImage: NetworkImage(profilePicsReturn()== null ? '' : profilePicsReturn() as String),
                     ),
                     SizedBox(
                       // Here we are using media Query because we haave both mobile and a web Screen
                       width: MediaQuery.of(context).size.width * 0.4,
-                      child: TextField(
-                        decoration: const InputDecoration(
+                      child: const TextField(
+                        decoration: InputDecoration(
                             hintText: 'Write a  Caption ...',
                             border: InputBorder.none),
                         //The below property is to see how many columns the text can go
@@ -115,7 +113,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       child: AspectRatio(
                         aspectRatio: 487 / 451,
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('assets/avatar.png'),
                               fit: BoxFit.fill,

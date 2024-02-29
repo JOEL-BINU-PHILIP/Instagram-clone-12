@@ -9,19 +9,21 @@ class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // A function for getting the user details
   Future<model.User> getUserDetails() async{
-    User currentUser = _auth.currentUser!;
+    User currentUser =_auth.currentUser!;
     DocumentSnapshot snap = await _firestore.collection('users').doc(currentUser.uid).get();
     print(currentUser.uid);
+    print(currentUser.photoURL);
     print(snap);
     return model.User.fromSnap(snap);
   }
+
   //sign up the user  For SignUp Authentication
   Future<String> signUpUser({
     required String email,
     required String password,
     required String username,
     required String bio,
-    required Uint8List file,
+    required Uint8List? file,
   }) async {
     String res = "Some Error occured";
     try {
@@ -29,13 +31,15 @@ class AuthMethods {
           password.isNotEmpty ||
           username.isNotEmpty ||
           bio.isNotEmpty ||
-          file != null) {
-        //register user
-        String photoURL = await StorageMethods()
-            .uploadImageToStorage('profilePics', file, false);
+          file != null) 
+          {
+          print('signUp-------------------------------------------------------------------------------------------------------------------------------');
+        //register user        
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        print(cred.user!.uid);
+        String photoURL = await StorageMethods()
+            .uploadImageToStorage('profilePics', file!, false);
+          print('signUp2-------------------------------------------------------------------------------------------------------------------------------');
         model.User user = model.User(
           photoURL: photoURL,
           uid: cred.user!.uid,
@@ -74,7 +78,7 @@ class AuthMethods {
         res = "success";
       }
     } on FirebaseAuthException catch (err) {
-      res = 'FireBase Error' + err.toString();
+      res = 'FireBase Error$err';
     } catch (err) {
       res = err.toString();
     }
@@ -94,7 +98,7 @@ class AuthMethods {
         res = "Please enter all the credentials properly";
       }
     } on FirebaseException catch (e) {
-      res = 'FireBase Exception' + e.toString();
+      res = 'FireBase Exception$e';
     } catch (err) {
       res = err.toString();
     }

@@ -10,6 +10,7 @@ import 'package:instagram_clone/responsive/webScreenLayout.dart';
 import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
@@ -34,9 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => UserProvider())
-      ],
+      providers: [ChangeNotifierProvider(create: (context) => UserProvider())],
       child: MaterialApp(
         title: 'Instagram Clone',
         theme: ThemeData.dark()
@@ -53,17 +52,17 @@ class MyApp extends StatelessWidget {
                 return Center(child: Text('${snapshot.error}'));
               }
             }
-            if (snapshot.connectionState ==ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator(
-                color: Colors.white,
-              ),);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
             }
-           return const LoginScreen();
+            return const LoginScreen();
           },
         ),
       ),
     );
   }
 }
-
-

@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => UserProvider())],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Instagram Clone',
         theme: ThemeData.dark()
             .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
@@ -45,6 +46,18 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
+                Future addData() async {
+                  UserProvider userProvider =
+                      Provider.of<UserProvider>(context, listen: false);
+                  // userProvider.getUser == null
+                  //     ? print('hello')
+                  //     : print('therndi');
+                  await userProvider.getUserDetails();
+                  // userProvider.getUser == null
+                  //     ? print('hello')
+                  //     : print('therndi');
+                }
+                addData();
                 return const ResponsiveLayout(
                     webScreenLayout: WebScreenLayout(),
                     mobileScreenLayout: MobileScreenLayout());

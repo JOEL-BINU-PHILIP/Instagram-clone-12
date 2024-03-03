@@ -21,9 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
+     _emailController.dispose();
+    _passwordController.dispose();
   }
 
   //Method to login the user

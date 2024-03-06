@@ -10,6 +10,7 @@ class AuthMethods {
   // A function for getting the user details
   Future<model.User> getUserDetails() async{
     User currentUser =_auth.currentUser!;
+    print("======${currentUser}");
     DocumentSnapshot snap = await _firestore.collection('users').doc(currentUser.uid).get();
     print(currentUser.uid);
     print(currentUser.photoURL);

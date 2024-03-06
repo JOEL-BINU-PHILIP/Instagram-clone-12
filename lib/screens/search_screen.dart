@@ -29,9 +29,9 @@ class _SearchScreenState extends State<SearchScreen> {
           decoration: const InputDecoration(
             labelText: 'Search for a user ',
           ),
-          onFieldSubmitted: (String _) {
+          onFieldSubmitted: (String oooo) {
             setState(() {
-              searchController.text = _;
+              searchController.text = oooo;
               isShowUsers = true;
             });
           },
@@ -51,22 +51,35 @@ class _SearchScreenState extends State<SearchScreen> {
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                    itemCount: (snapshot.data!.docs.length),
+                    itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
+                      final userData = snapshot.data!.docs[index].data();
+                      final photoURL = userData.containsKey('photoURL')
+                          ? userData['photoURL']
+                          : "https://plus.unsplash.com/premium_photo-1709311441238-1c83ef3b8d04?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+                      final username = userData.containsKey('username')
+                          ? userData['username']
+                          : 'username';
                       return ListTile(
                         leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            (snapshot.data!.docs[index]['photoURL']),
-                          ),
+                          backgroundImage:NetworkImage(photoURL),
                         ),
-                        title: Text(snapshot.data!.docs[index]['username']),
+                        title: Text(username),
                       );
                     },
                   );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text(' Error : snapshot has error}'),
+                  );
+                } else {
+                  return Center(child: Text('dfefefe'));
                 }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
               },
             )
           : FutureBuilder(
@@ -94,7 +107,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   childrenDelegate: SliverChildBuilderDelegate(
                     childCount: snapshot.data!.docs.length,
-                    (context, index) => Image.network(snapshot.data!.docs[index]['postURL'] , fit: BoxFit.cover,),
+                    (context, index) => Image.network(
+                      snapshot.data!.docs[index]['postURL'],
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 );
               }),

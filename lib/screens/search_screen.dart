@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -60,11 +61,14 @@ class _SearchScreenState extends State<SearchScreen> {
                       final username = userData.containsKey('username')
                           ? userData['username']
                           : 'username';
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage:NetworkImage(photoURL),
+                      return InkWell(
+                        onTap:() => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileScreen(uid: snapshot.data!.docs[index]['uid']))),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:NetworkImage(photoURL),
+                          ),
+                          title: Text(username),
                         ),
-                        title: Text(username),
                       );
                     },
                   );

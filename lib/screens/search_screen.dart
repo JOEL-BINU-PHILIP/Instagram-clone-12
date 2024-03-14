@@ -82,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Text(' Error : snapshot has error}'),
                   );
                 } else {
-                  return Center(child: Text('dfefefe'));
+                  return const Center(child: Text('dfefefe'));
                 }
               },
             )
@@ -103,10 +103,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     crossAxisSpacing: 4,
                     repeatPattern: QuiltedGridRepeatPattern.inverted,
                     pattern: [
-                      QuiltedGridTile(2, 2),
-                      QuiltedGridTile(1, 1),
-                      QuiltedGridTile(1, 1),
-                      QuiltedGridTile(1, 2),
+                      const QuiltedGridTile(2, 2),
+                      const QuiltedGridTile(1, 1),
+                      const QuiltedGridTile(1, 1),
+                      const QuiltedGridTile(1, 2),
                     ],
                   ),
                   childrenDelegate: SliverChildBuilderDelegate(

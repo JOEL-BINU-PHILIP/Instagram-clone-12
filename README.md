@@ -28,3 +28,13 @@ After cloning this repository, migrate to `instagram-flutter-clone` folder. Then
    flutter run
    flutter run -d chrome --web-renderer html # to see the best output
 
+## Tech Used
+
+**Server:**
+- Firebase Auth
+- Firebase Storage
+- Firebase Firestore
+
+**Client:**
+- Flutter
+- Provider
